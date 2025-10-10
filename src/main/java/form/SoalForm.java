@@ -38,8 +38,8 @@ public class SoalForm extends javax.swing.JFrame {
     private String answerBImg = null;  
     private String answerCImg = null;  
     private String answerDImg = null;  
-    private int selectedRow = 0;
-    private int selectedIdQuestion = 0;
+    private int selectedRow = -1;
+    private int selectedIdQuestion = -1;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SoalForm.class.getName());
 
@@ -176,6 +176,7 @@ private ImageIcon resizeImage(String path, int width, int height) {
         answerAText = new javax.swing.JTextArea();
         btnImgAnswerA = new javax.swing.JButton();
         ImgAnswerA = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         answerBIsCorrect = new javax.swing.JCheckBox();
@@ -183,6 +184,7 @@ private ImageIcon resizeImage(String path, int width, int height) {
         answerBText = new javax.swing.JTextArea();
         ImgAnswerB = new javax.swing.JLabel();
         btnImgAnswerB = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         answerCIsCorrect = new javax.swing.JCheckBox();
@@ -190,6 +192,7 @@ private ImageIcon resizeImage(String path, int width, int height) {
         answerCText = new javax.swing.JTextArea();
         ImgAnswerC = new javax.swing.JLabel();
         btnImgAnswerC = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         answerDIsCorrect = new javax.swing.JCheckBox();
@@ -197,6 +200,7 @@ private ImageIcon resizeImage(String path, int width, int height) {
         answerDText = new javax.swing.JTextArea();
         ImgAnswerD = new javax.swing.JLabel();
         btnImgAnswerD = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jDesktopPane2 = new javax.swing.JDesktopPane();
         jPanel10 = new javax.swing.JPanel();
@@ -218,6 +222,7 @@ private ImageIcon resizeImage(String path, int width, int height) {
         questionTextArea = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         imagePreview = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelSoal = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
@@ -250,6 +255,13 @@ private ImageIcon resizeImage(String path, int width, int height) {
 
         ImgAnswerA.setText("jLabel4");
 
+        jButton7.setText("Hapus");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -260,7 +272,9 @@ private ImageIcon resizeImage(String path, int width, int height) {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(answerAIsCorrect)
                         .addGap(49, 49, 49)
-                        .addComponent(btnImgAnswerA))
+                        .addComponent(btnImgAnswerA, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel8)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
@@ -276,10 +290,11 @@ private ImageIcon resizeImage(String path, int width, int height) {
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                        .addGap(8, 8, 8)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnImgAnswerA)
-                            .addComponent(answerAIsCorrect)))
+                            .addComponent(answerAIsCorrect)
+                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(ImgAnswerA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -301,6 +316,13 @@ private ImageIcon resizeImage(String path, int width, int height) {
             }
         });
 
+        jButton9.setText("Hapus");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -313,7 +335,9 @@ private ImageIcon resizeImage(String path, int width, int height) {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(answerBIsCorrect)
                         .addGap(64, 64, 64)
-                        .addComponent(btnImgAnswerB)))
+                        .addComponent(btnImgAnswerB)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12)
                 .addComponent(ImgAnswerB, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                 .addContainerGap())
@@ -323,18 +347,18 @@ private ImageIcon resizeImage(String path, int width, int height) {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addComponent(ImgAnswerB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
+                    .addComponent(ImgAnswerB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(answerBIsCorrect)
-                            .addComponent(btnImgAnswerB))
-                        .addGap(0, 3, Short.MAX_VALUE))))
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnImgAnswerB)
+                                .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
 
         jLabel19.setText("Answer C :");
@@ -354,6 +378,13 @@ private ImageIcon resizeImage(String path, int width, int height) {
             }
         });
 
+        jButton8.setText("Hapus");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -363,8 +394,10 @@ private ImageIcon resizeImage(String path, int width, int height) {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(answerCIsCorrect)
-                        .addGap(50, 50, 50)
-                        .addComponent(btnImgAnswerC))
+                        .addGap(56, 56, 56)
+                        .addComponent(btnImgAnswerC)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
@@ -383,7 +416,8 @@ private ImageIcon resizeImage(String path, int width, int height) {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnImgAnswerC)
-                            .addComponent(answerCIsCorrect)))
+                            .addComponent(answerCIsCorrect)
+                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(ImgAnswerC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -405,6 +439,13 @@ private ImageIcon resizeImage(String path, int width, int height) {
             }
         });
 
+        jButton10.setText("Hapus");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -415,11 +456,13 @@ private ImageIcon resizeImage(String path, int width, int height) {
                     .addComponent(jLabel21)
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(answerDIsCorrect)
-                        .addGap(61, 61, 61)
-                        .addComponent(btnImgAnswerD))
+                        .addGap(55, 55, 55)
+                        .addComponent(btnImgAnswerD)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 356, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(ImgAnswerD, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+                .addComponent(ImgAnswerD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
@@ -431,15 +474,17 @@ private ImageIcon resizeImage(String path, int width, int height) {
                         .addComponent(jLabel21)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                         .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnImgAnswerD)
+                            .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnImgAnswerD)
+                                .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(answerDIsCorrect)))
                     .addComponent(ImgAnswerD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        save.setText("Save");
+        save.setText("Tambah");
         save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveActionPerformed(evt);
@@ -447,8 +492,13 @@ private ImageIcon resizeImage(String path, int width, int height) {
         });
 
         update.setText("Update");
+        update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateActionPerformed(evt);
+            }
+        });
 
-        delete.setText("Delete");
+        delete.setText("Hapus");
         delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteActionPerformed(evt);
@@ -503,7 +553,7 @@ private ImageIcon resizeImage(String path, int width, int height) {
         topicTextArea.setRows(5);
         jScrollPane3.setViewportView(topicTextArea);
 
-        buttonUpload.setText("Upload");
+        buttonUpload.setText("Upload gambar");
         buttonUpload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonUploadActionPerformed(evt);
@@ -526,6 +576,13 @@ private ImageIcon resizeImage(String path, int width, int height) {
 
         imagePreview.setText("jLabel7");
 
+        jButton5.setText("Hapus gambar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -546,9 +603,11 @@ private ImageIcon resizeImage(String path, int width, int height) {
                                     .addGroup(jPanel4Layout.createSequentialGroup()
                                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel6)
-                                            .addComponent(buttonUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(levelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel5)
-                                            .addComponent(levelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(buttonUpload, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
                                         .addGap(83, 83, 83)
                                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                 .addGap(36, 36, 36)
@@ -572,12 +631,14 @@ private ImageIcon resizeImage(String path, int width, int height) {
                                 .addGap(6, 6, 6)
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel4Layout.createSequentialGroup()
-                                        .addComponent(buttonUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(levelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(buttonUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(levelComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
                                         .addComponent(jLabel6))
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
@@ -679,13 +740,10 @@ private ImageIcon resizeImage(String path, int width, int height) {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1662, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(397, Short.MAX_VALUE))
         );
@@ -842,21 +900,22 @@ private ImageIcon resizeImage(String path, int width, int height) {
 }
 
     
-    private void validateSoal() {
+    private boolean validateSoal() {
         if (questionTextArea.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Soal harus diisi !");
-            return;
+            return false;
         }
         
         if (topicTextArea.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Topic soal harus diisi !");
-            return;
+            return false;
         }
         
         if (answerAText.getText().equals("") || answerBText.getText().equals("") || answerCText.getText().equals("") || answerDText.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "Masing masing jawaban harus diisi !");
-            return;
+            return false;
         }
+        return true;
     }
     
     private String validateAnswerType() {
@@ -878,33 +937,52 @@ private ImageIcon resizeImage(String path, int width, int height) {
     }
     
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-    validateSoal();
+     if (this.selectedRow != -1) {
+        int result = JOptionPane.showConfirmDialog(
+            this,
+            "Anda telah memilih data yang ada.\n"
+          + "Apakah Anda ingin menambah data baru?\n\n"
+          + "Klik OK untuk menambah data baru.\n"
+          + "Klik Cancel jika ingin mengedit menggunakan tombol Update.",
+            "Konfirmasi",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (result == JOptionPane.OK_OPTION) {
+            // Reset mode ke 'tambah data baru'
+            this.selectedRow = -1;
+            // Panggil fungsi ini ulang supaya lanjut proses simpan data baru
+            saveActionPerformed(evt);
+        }
+        return;
+    }
+
+    // ======= Mode tambah data baru =======
+   if(!validateSoal()) return;
+
     String answerType = validateAnswerType();
     int[] scores = hitungScore();
-    
 
     List<Answer> answers = new ArrayList<>();
-    Answer answerA = new Answer(answerAText.getText(), "A", scores[0], answerAIsCorrect.isSelected(), this.answerAImg);
-    Answer answerB = new Answer(answerBText.getText(), "B", scores[1], answerBIsCorrect.isSelected(), this.answerBImg);
-    Answer answerC = new Answer(answerCText.getText(), "C", scores[2], answerCIsCorrect.isSelected(), this.answerCImg);
-    Answer answerD = new Answer(answerDText.getText(), "D", scores[3], answerDIsCorrect.isSelected(), this.answerDImg);
-
-    answers.add(answerA);
-    answers.add(answerB);
-    answers.add(answerC);
-    answers.add(answerD);
+    answers.add(new Answer(answerAText.getText(), "A", scores[0], answerAIsCorrect.isSelected(), this.answerAImg));
+    answers.add(new Answer(answerBText.getText(), "B", scores[1], answerBIsCorrect.isSelected(), this.answerBImg));
+    answers.add(new Answer(answerCText.getText(), "C", scores[2], answerCIsCorrect.isSelected(), this.answerCImg));
+    answers.add(new Answer(answerDText.getText(), "D", scores[3], answerDIsCorrect.isSelected(), this.answerDImg));
 
     Question question = new Question(
         0,
         questionTextArea.getText(),
-        questionImage == null ? null : questionImage,
+        questionImage,
         answerType,
         levelComboBox.getSelectedItem().toString(),
         topicTextArea.getText(),
         answers
     );
-       
-    this.question_repo.createSoal(question);
+
+    question_repo.createSoal(question, this);
+    getSoal();
+    clear();
     }//GEN-LAST:event_saveActionPerformed
 
     private void refreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshActionPerformed
@@ -937,27 +1015,31 @@ private ImageIcon resizeImage(String path, int width, int height) {
     }//GEN-LAST:event_buttonUploadActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
        new WebcamForm().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        new LeaderboardForm().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         new DaftarSiswaForm().setVisible(true);
+         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-       
+       new NilaiForm().setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteActionPerformed
-       if (this.selectedRow > 0) {
+       if (this.selectedRow > -1) {
             int confirm = JOptionPane.showConfirmDialog(
                     this, 
                     "Apakah Anda yakin ingin menghapus data ini?", 
@@ -971,7 +1053,7 @@ private ImageIcon resizeImage(String path, int width, int height) {
        } else {
            JOptionPane.showConfirmDialog(this, "Silahkan pilih soal di tabel bawah yang akan dihapus");
        }
-       this.selectedRow = 0;
+      
        clear();
        getSoal();
     }//GEN-LAST:event_deleteActionPerformed
@@ -981,7 +1063,8 @@ private ImageIcon resizeImage(String path, int width, int height) {
     
     private void mouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mouseClicked
         this.selectedRow = tabelSoal.getSelectedRow();   // ambil baris yang diklik
-        if (this.selectedRow >= 0) {
+        System.out.println(this.selectedRow);
+        if (this.selectedRow > -1) {
             // ambil data tiap kolom
             this.selectedIdQuestion = Integer.parseInt(tabelSoal.getValueAt(selectedRow, 0).toString());
             String question = tabelSoal.getValueAt(selectedRow, 1).toString();
@@ -1224,12 +1307,90 @@ private ImageIcon resizeImage(String path, int width, int height) {
         answerBIsCorrect.setSelected(false);
         answerCIsCorrect.setSelected(false);
         answerDIsCorrect.setSelected(false);
-
+        this.selectedIdQuestion = -1;
+        this.selectedRow = -1;
+         this.selectedRow = -1;
     }
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
       
                 clear();
     }//GEN-LAST:event_clearBtnActionPerformed
+
+    private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
+      if (selectedRow == -1) {
+          JOptionPane.showMessageDialog(
+            this,
+            "Silakan pilih data terlebih dahulu sebelum melakukan update.",
+            "Peringatan",
+            JOptionPane.WARNING_MESSAGE
+        );
+        return;
+      }
+     // Konfirmasi sebelum update
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Apakah Anda yakin ingin memperbarui data soal ini?",
+        "Konfirmasi Update",
+        JOptionPane.OK_CANCEL_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+
+    if (confirm != JOptionPane.OK_OPTION) {
+        return; // Batalkan update jika user tidak klik OK
+    }
+    
+    if(!validateSoal()) return;
+
+    String answerType = validateAnswerType();
+    int[] scores = hitungScore();
+
+    List<Answer> answers = new ArrayList<>();
+    answers.add(new Answer(answerAText.getText(), "A", scores[0], answerAIsCorrect.isSelected(), this.answerAImg));
+    answers.add(new Answer(answerBText.getText(), "B", scores[1], answerBIsCorrect.isSelected(), this.answerBImg));
+    answers.add(new Answer(answerCText.getText(), "C", scores[2], answerCIsCorrect.isSelected(), this.answerCImg));
+    answers.add(new Answer(answerDText.getText(), "D", scores[3], answerDIsCorrect.isSelected(), this.answerDImg));
+
+    Question question = new Question(
+        this.selectedIdQuestion,
+        questionTextArea.getText(),
+        questionImage,
+        answerType,
+        levelComboBox.getSelectedItem().toString(),
+        topicTextArea.getText(),
+        answers
+    );
+
+    question_repo.updateSoal(question, this);
+    getSoal();
+    clear();
+    
+    }//GEN-LAST:event_updateActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+      imagePreview.setIcon(null);
+      this.questionImage = null;
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+      ImgAnswerA.setIcon(null);
+      this.answerAImg = null;
+
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+       ImgAnswerC.setIcon(null);
+        this.answerCImg = null;
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        ImgAnswerB.setIcon(null);
+         this.answerBImg = null;
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+       ImgAnswerD.setIcon(null);
+        this.answerDImg = null;
+    }//GEN-LAST:event_jButton10ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1254,10 +1415,15 @@ private ImageIcon resizeImage(String path, int width, int height) {
     private javax.swing.JButton delete;
     private javax.swing.JLabel imagePreview;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JDesktopPane jDesktopPane2;
     private javax.swing.JLabel jLabel1;

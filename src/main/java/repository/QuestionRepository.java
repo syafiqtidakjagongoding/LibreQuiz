@@ -7,6 +7,7 @@ package repository;
 import database.Database;
 import entity.Answer;
 import entity.Question;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -97,7 +99,7 @@ public class QuestionRepository {
 }
 
    
-   public void createSoal(Question question) {
+   public void createSoal(Question question,Component parentComponent) {
     String insertQuestion = """
         INSERT INTO question (question_text, answer_type, level, topic) 
         VALUES (?,?,?,?)
@@ -120,9 +122,9 @@ public class QuestionRepository {
         int questionId;
         try (PreparedStatement ps = conn.prepareStatement(insertQuestion, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, question.question_text);
-            ps.setString(3, question.answer_type);
-            ps.setString(4, question.level);
-            ps.setString(5, question.topic);
+            ps.setString(2, question.answer_type);
+            ps.setString(3, question.level);
+            ps.setString(4, question.topic);
             ps.executeUpdate();
 
             try (ResultSet rs = ps.getGeneratedKeys()) {
@@ -158,8 +160,100 @@ public class QuestionRepository {
         }
 
         conn.commit();
+            JOptionPane.showMessageDialog(parentComponent, "Data soal baru berhasil disimpan!");
+
     } catch (SQLException e) {
         e.printStackTrace();
+        JOptionPane.showMessageDialog(parentComponent, "Gagal menambah data soal: " + e.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+public void updateSoal(Question question, Component parentComponent) {
+    String updateQuestion = """
+        UPDATE question
+        SET question_text = ?, answer_type = ?, level = ?, topic = ?
+        WHERE id = ?
+    """;
+
+    String deleteAnswers = """
+        DELETE FROM options_answer WHERE question_id = ?
+    """;
+
+    String insertAnswer = """
+        INSERT INTO options_answer (answer, question_id, score, correct, label, image_answer)
+        VALUES (?,?,?,?,?,?)
+    """;
+
+    String deleteImage = """
+        DELETE FROM question_image WHERE question_id = ?
+    """;
+
+    String insertImage = """
+        INSERT INTO question_image (image_path, question_id)
+        VALUES (?,?)
+    """;
+
+    try (Connection conn = Database.getConnection()) {
+        conn.setAutoCommit(false);
+
+        // 1. Update tabel question
+        try (PreparedStatement ps = conn.prepareStatement(updateQuestion)) {
+            ps.setString(1, question.question_text);
+            ps.setString(2, question.answer_type);
+            ps.setString(3, question.level);
+            ps.setString(4, question.topic);
+            ps.setInt(5, question.id);   // <== PENTING: pastikan question.id sudah terisi
+            ps.executeUpdate();
+        }
+
+        // 2. Hapus jawaban lama
+        try (PreparedStatement ps = conn.prepareStatement(deleteAnswers)) {
+            ps.setInt(1, question.id);
+            ps.executeUpdate();
+        }
+
+        // 3. Insert jawaban baru
+        try (PreparedStatement ps = conn.prepareStatement(insertAnswer)) {
+            for (Answer ans : question.answers) {
+                ps.setString(1, ans.answer);
+                ps.setInt(2, question.id);
+                ps.setInt(3, ans.score);
+                ps.setBoolean(4, ans.correct);
+                ps.setString(5, ans.label);
+                ps.setString(6, ans.image_answer);
+                ps.addBatch();
+            }
+            ps.executeBatch();
+        }
+
+        // 4. Update gambar
+        //    (strategi: hapus semua, insert baru jika ada)
+        try (PreparedStatement ps = conn.prepareStatement(deleteImage)) {
+            ps.setInt(1, question.id);
+            ps.executeUpdate();
+        }
+
+        if (question.question_image != null && !question.question_image.isEmpty()) {
+            try (PreparedStatement ps = conn.prepareStatement(insertImage)) {
+                ps.setString(1, question.question_image);
+                ps.setInt(2, question.id);
+                ps.executeUpdate();
+            }
+        }
+
+        conn.commit();
+        JOptionPane.showMessageDialog(parentComponent, "Data soal berhasil diperbarui!");
+
+    } catch (SQLException e) {
+        try {
+            // rollback kalau error
+            Database.getConnection().rollback();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(parentComponent, "Gagal memperbarui data soal: " + e.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
 
