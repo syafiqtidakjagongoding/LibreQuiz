@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  * @author syafiq
  */
 public class QuestionRepository {
-   public List<Question> getAllQuestion() {
+   public List<Question> getAllQuestion(Component parentComponent) {
         List<Question> questions = new ArrayList<>();
 
         String sql = """
@@ -71,15 +71,16 @@ public class QuestionRepository {
             );
             currentQuestion.answers.add(ans);
         }
-
     } catch (SQLException e) {
             e.printStackTrace();
-        }
+            JOptionPane.showMessageDialog(parentComponent, "Gagal mengambil data soal: " + e.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
+    }
+          return questions;
 
-        return questions;
     }
    
-  public void deleteSoal(int question_id) {
+  public void deleteSoal(int question_id, Component parentComponent) {
     String sql = "DELETE FROM question WHERE id = ?";
 
     try (Connection conn = Database.getConnection();  // ganti dengan method koneksi kamu
@@ -89,11 +90,14 @@ public class QuestionRepository {
 
         int rowsDeleted = stmt.executeUpdate();
         if (rowsDeleted > 0) {
-            System.out.println("Soal dengan ID " + question_id + " berhasil dihapus.");
+           JOptionPane.showMessageDialog(parentComponent, "Data soal berhasil dihapus!");
         } else {
-            System.out.println("Soal dengan ID " + question_id + " tidak ditemukan.");
+           JOptionPane.showMessageDialog(parentComponent, "Data soal tidak ditemukan");
+
         }
     } catch (SQLException e) {
+        JOptionPane.showMessageDialog(parentComponent, "Gagal menghapus data soal: " + e.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
         e.printStackTrace();
     }
 }

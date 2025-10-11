@@ -4,6 +4,19 @@
  */
 package form;
 
+import entity.Answer;
+import entity.Kelas;
+import entity.Question;
+import entity.Siswa;
+import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import repository.KelasRepository;
+import repository.QuestionRepository;
+import repository.SiswaRepository;
+import utils.MultiLineCellRenderer;
+
 /**
  *
  * @author syafiq
@@ -11,12 +24,62 @@ package form;
 public class DaftarSiswaForm extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(DaftarSiswaForm.class.getName());
-
+    private SiswaRepository siswa_repo;
+    private KelasRepository kelas_repo;
+    private int selectedRow = -1;
+    private int selectedIdSiswa = -1;
     /**
      * Creates new form Dashboard
      */
     public DaftarSiswaForm() {
         initComponents();
+        setLocationRelativeTo(null); // posisi center
+       setExtendedState(JFrame.MAXIMIZED_BOTH); // otomatis full screen
+           this.siswa_repo = new SiswaRepository();
+           this.kelas_repo = new KelasRepository();
+           
+           getAllKelas();
+           getSiswa();
+    }
+    
+    private void getAllKelas() {
+        List<Kelas> kelass = this.kelas_repo.getAllKelas();
+
+        // Pastikan combobox kosong dulu (optional)
+        kelasField.removeAllItems();
+
+        // Tambahkan setiap kelas ke combobox
+        for (Kelas k : kelass) {
+            kelasField.addItem(k);
+        }
+    }
+    
+    private void getSiswa() {
+        String[] columnNames = {
+            "Id", "Nama", "No absen", "NIS", "Kelas", "Jurusan", 
+        };
+
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        List<Siswa> siswas = siswa_repo.getAllSiswa(this);
+
+        for (Siswa s : siswas) {
+
+            Object[] row = {
+               s.id,
+               s.nama,
+               s.no_absen,
+               s.nis,
+               s.kelas,
+               s.jurusan
+            };
+
+            model.addRow(row);
+        }
+
+        tabelSiswa.setModel(model);
+        tabelSiswa.setRowHeight(50);
+         tabelSiswa.getColumnModel().getColumn(1).setCellRenderer(new MultiLineCellRenderer());
+         tabelSiswa.getColumnModel().getColumn(5).setCellRenderer(new MultiLineCellRenderer());
     }
 
     /**
@@ -35,8 +98,22 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        namaField = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        kelasField = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        nisField = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jurusanField = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        noAbsenField = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jButton7 = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabelSiswa = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,6 +124,11 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
         jLabel1.setText("Hello admin");
 
         jButton1.setText("Soal");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Leaderboard");
 
@@ -89,21 +171,116 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(917, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jLabel2.setText("Nama :");
+
+        jLabel5.setText("Kelas :");
+
+        jLabel3.setText("NIS :");
+
+        jLabel6.setText("Jurusan :");
+
+        jLabel4.setText("No absen :");
+
+        jButton7.setText("Hapus");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
+
+        tabelSiswa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Id", "Siswa", "Nama", "No Absen", "NIS", "Kelas", "Jurusan"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tabelSiswa.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelSiswa.setShowGrid(true);
+        tabelSiswa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelSiswaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelSiswa);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(namaField, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel5)
+                    .addComponent(kelasField, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jurusanField, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nisField, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(noAbsenField, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(61, 61, 61)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(149, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(namaField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nisField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(noAbsenField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jurusanField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(kelasField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(38, 38, 38)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(210, Short.MAX_VALUE))
+        );
+
+        jScrollPane2.setViewportView(jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,51 +288,204 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 983, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane2)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       new SoalForm().setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tabelSiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelSiswaMouseClicked
+      this.selectedRow = tabelSiswa.getSelectedRow();   // ambil baris yang diklik
+        System.out.println(this.selectedRow);
+        if (this.selectedRow > -1) {
+            // ambil data tiap kolom
+            this.selectedIdSiswa = Integer.parseInt(tabelSiswa.getValueAt(selectedRow, 0).toString());
+            String nama = tabelSiswa.getValueAt(selectedRow, 1).toString();
+            String noAbsen = tabelSiswa.getValueAt(selectedRow, 2).toString();
+            String nis  = tabelSiswa.getValueAt(selectedRow, 3).toString();
+            String kelas  = tabelSiswa.getValueAt(selectedRow, 4).toString();
+            String jurusan  = tabelSiswa.getValueAt(selectedRow, 5).toString();
+            
+            
+            namaField.setText(nama);
+            noAbsenField.setText(noAbsen);
+            nisField.setText(nis);
+            for (int i = 0; i < kelasField.getItemCount(); i++) {
+                Kelas item = kelasField.getItemAt(i);
+                if (item != null && item.kelas.equals(kelas)) {
+                    kelasField.setSelectedIndex(i);
                     break;
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
+            jurusanField.setText(jurusan);
         }
-        //</editor-fold>
+    }//GEN-LAST:event_tabelSiswaMouseClicked
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new DaftarSiswaForm().setVisible(true));
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+      if (this.selectedRow == -1) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Mohon pilih siswa yang akan dihapus.",
+            "Peringatan",
+            JOptionPane.WARNING_MESSAGE
+        );
+        return;
     }
 
+    // Tampilkan dialog konfirmasi
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Apakah Anda yakin ingin menghapus data siswa ini?",
+        "Konfirmasi Hapus",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+
+    if (confirm == JOptionPane.YES_OPTION) {
+        // Panggil method delete
+        siswa_repo.deleteSiswa(this.selectedIdSiswa,this);
+
+        // Refresh tabel setelah delete
+        getSiswa();
+        clear();
+       
+
+    }
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+       if (this.selectedRow == -1) {
+        JOptionPane.showMessageDialog(
+            this,
+            "Mohon pilih siswa yang akan diedit.",
+            "Peringatan",
+            JOptionPane.WARNING_MESSAGE
+        );
+        return;
+    }
+
+    // Tampilkan dialog konfirmasi
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Apakah Anda yakin ingin mengedit data siswa ini?",
+        "Konfirmasi Edit",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE
+    );
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        if (!validateForm()) return;
+         // Refresh tabel setelah delete
+        getSiswa();
+        clear();
+       
+
+       Kelas selectedKelas = (Kelas) kelasField.getSelectedItem();
+       System.out.println(selectedKelas);
+        Siswa siswa = new Siswa(
+            this.selectedIdSiswa,
+            namaField.getText().trim(),
+            nisField.getText().trim(),
+            Integer.parseInt("15"),
+            selectedKelas.kelas,
+            jurusanField.getText().trim()
+        );
+        
+        this.siswa_repo.updateSiswa(siswa, selectedKelas.id, this);
+
+    }
+    
+    
+    }//GEN-LAST:event_editButtonActionPerformed
+
+   private boolean validateForm() {
+    String nama = namaField.getText().trim();
+    String jurusan = jurusanField.getText().trim();
+    String noAbsen = noAbsenField.getText().trim();
+    String nis = nisField.getText().trim();
+    Kelas kelas = (Kelas) kelasField.getSelectedItem();
+
+    if (nama.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Nama tidak boleh kosong", "Validasi", JOptionPane.WARNING_MESSAGE);
+        namaField.requestFocus();
+        return false;
+    }
+
+    if (jurusan.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Jurusan tidak boleh kosong", "Validasi", JOptionPane.WARNING_MESSAGE);
+        jurusanField.requestFocus();
+        return false;
+    }
+
+    if (noAbsen.isEmpty() || !noAbsen.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "No Absen tidak boleh kosong dan harus angka", "Validasi", JOptionPane.WARNING_MESSAGE);
+        noAbsenField.requestFocus();
+        return false;
+    }
+
+    if (nis.isEmpty() || !nis.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "NIS tidak boleh kosong dan harus berupa angka", "Validasi", JOptionPane.WARNING_MESSAGE);
+        nisField.requestFocus();
+        return false;
+    }
+
+    if (kelas == null) {
+        JOptionPane.showMessageDialog(this, "Kelas harus dipilih", "Validasi", JOptionPane.WARNING_MESSAGE);
+        kelasField.requestFocus();
+        return false;
+    }
+
+    return true; // semua valid
+}
+
+    
+    private void clear() {
+        namaField.setText("");
+        noAbsenField.setText("");
+        nisField.setText("");
+        jurusanField.setText("");
+        kelasField.setSelectedItem(null);
+                
+       // Reset variabel selectedRow dan selectedIdSiswa
+        this.selectedRow = -1;
+        this.selectedIdSiswa = -1;
+    }
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton editButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jurusanField;
+    private javax.swing.JComboBox<Kelas> kelasField;
+    private javax.swing.JTextField namaField;
+    private javax.swing.JTextField nisField;
+    private javax.swing.JTextField noAbsenField;
+    private javax.swing.JTable tabelSiswa;
     // End of variables declaration//GEN-END:variables
 }

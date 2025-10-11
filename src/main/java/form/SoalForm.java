@@ -49,8 +49,8 @@ public class SoalForm extends javax.swing.JFrame {
     public SoalForm() {
        initComponents();    
        setLocationRelativeTo(null); // posisi center
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // otomatis full screen
-       
+       setExtendedState(JFrame.MAXIMIZED_BOTH); // otomatis full screen
+        this.question_repo = new QuestionRepository();
         this.imagePreview.setIcon(null);
         imagePreview.setText(""); // kalau ada text default
         ImgAnswerA.setIcon(null);
@@ -77,8 +77,8 @@ public class SoalForm extends javax.swing.JFrame {
     };
 
     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-    this.question_repo = new QuestionRepository();
-    List<Question> questions = question_repo.getAllQuestion();
+   
+    List<Question> questions = question_repo.getAllQuestion(this);
 
     for (Question q : questions) {
         StringBuilder correctAnswer = new StringBuilder();
@@ -721,6 +721,8 @@ private ImageIcon resizeImage(String path, int width, int height) {
                 "Id", "Question Text", "Question Image", "Answer type", "Level", "Topic", "Question type"
             }
         ));
+        tabelSoal.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tabelSoal.setShowGrid(true);
         tabelSoal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 SoalForm.this.mouseClicked(evt);
@@ -962,6 +964,9 @@ private ImageIcon resizeImage(String path, int width, int height) {
    if(!validateSoal()) return;
 
     String answerType = validateAnswerType();
+    if (answerType.equals("")) {
+        return;
+    }
     int[] scores = hitungScore();
 
     List<Answer> answers = new ArrayList<>();
@@ -1048,7 +1053,7 @@ private ImageIcon resizeImage(String path, int width, int height) {
             );
 
             if (confirm == JOptionPane.YES_OPTION) {
-                this.question_repo.deleteSoal(this.selectedIdQuestion);
+                this.question_repo.deleteSoal(this.selectedIdQuestion, this);
             }
        } else {
            JOptionPane.showConfirmDialog(this, "Silahkan pilih soal di tabel bawah yang akan dihapus");
@@ -1342,6 +1347,9 @@ private ImageIcon resizeImage(String path, int width, int height) {
     if(!validateSoal()) return;
 
     String answerType = validateAnswerType();
+     if (answerType.equals("")) {
+        return;
+    }
     int[] scores = hitungScore();
 
     List<Answer> answers = new ArrayList<>();
@@ -1369,27 +1377,35 @@ private ImageIcon resizeImage(String path, int width, int height) {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
       imagePreview.setIcon(null);
       this.questionImage = null;
+      imagePreview.setBorder(null);
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
       ImgAnswerA.setIcon(null);
       this.answerAImg = null;
-
+      ImgAnswerA.setBorder(null);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
        ImgAnswerC.setIcon(null);
         this.answerCImg = null;
+              ImgAnswerC.setBorder(null);
+
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         ImgAnswerB.setIcon(null);
          this.answerBImg = null;
+               ImgAnswerB.setBorder(null);
+
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
        ImgAnswerD.setIcon(null);
         this.answerDImg = null;
+              ImgAnswerD.setBorder(null);
+
     }//GEN-LAST:event_jButton10ActionPerformed
 
 

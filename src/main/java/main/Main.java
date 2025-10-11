@@ -8,6 +8,7 @@ import form.LoginForm;
 import form.SoalForm;
 import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatLightLaf;
+import form.DaftarSiswaForm;
 /**
  *
  * @author syafiq
@@ -21,6 +22,6 @@ public class Main {
             e.printStackTrace();
         }
 
-        new SoalForm().setVisible(true);
+        new DaftarSiswaForm().setVisible(true);
     }
 }
