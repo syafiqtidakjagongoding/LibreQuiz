@@ -7,19 +7,21 @@ package repository;
 import database.Database;
 import entity.Kelas;
 import entity.Siswa;
+import java.awt.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author syafiq
  */
 public class KelasRepository {
-    public List<Kelas> getAllKelas() {
+    public List<Kelas> getAllKelas(Component parentComponent) {
         String sql = """
         SELECT id, kelas, jurusan FROM kelas
         """;
@@ -39,6 +41,8 @@ public class KelasRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            JOptionPane.showMessageDialog(parentComponent, "Gagal mengambil data kelas: " + e.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         return kelass;

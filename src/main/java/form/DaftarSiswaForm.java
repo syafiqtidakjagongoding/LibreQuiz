@@ -28,31 +28,20 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
     private KelasRepository kelas_repo;
     private int selectedRow = -1;
     private int selectedIdSiswa = -1;
+    private Kelas selectedKelas;
     /**
      * Creates new form Dashboard
      */
     public DaftarSiswaForm() {
+        this.siswa_repo = new SiswaRepository();
+           this.kelas_repo = new KelasRepository();
         initComponents();
         setLocationRelativeTo(null); // posisi center
        setExtendedState(JFrame.MAXIMIZED_BOTH); // otomatis full screen
-           this.siswa_repo = new SiswaRepository();
-           this.kelas_repo = new KelasRepository();
            
-           getAllKelas();
            getSiswa();
     }
-    
-    private void getAllKelas() {
-        List<Kelas> kelass = this.kelas_repo.getAllKelas();
 
-        // Pastikan combobox kosong dulu (optional)
-        kelasField.removeAllItems();
-
-        // Tambahkan setiap kelas ke combobox
-        for (Kelas k : kelass) {
-            kelasField.addItem(k);
-        }
-    }
     
     private void getSiswa() {
         String[] columnNames = {
@@ -102,7 +91,7 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         namaField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        kelasField = new javax.swing.JComboBox<>();
+        kelasField = new javax.swing.JComboBox<Kelas>();
         jLabel5 = new javax.swing.JLabel();
         nisField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -131,12 +120,32 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
         });
 
         jButton2.setText("Leaderboard");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Daftar Siswa");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Webcam");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Nilai");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -175,6 +184,13 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
         );
 
         jLabel2.setText("Nama :");
+
+        kelasField.setModel(new javax.swing.DefaultComboBoxModel<>());
+        List<Kelas> kelass = kelas_repo.getAllKelas(this);
+        // Tambahkan setiap kelas ke combobox
+        for (Kelas k : kelass) {
+            kelasField.addItem(k);
+        }
 
         jLabel5.setText("Kelas :");
 
@@ -307,7 +323,6 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
 
     private void tabelSiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelSiswaMouseClicked
       this.selectedRow = tabelSiswa.getSelectedRow();   // ambil baris yang diklik
-        System.out.println(this.selectedRow);
         if (this.selectedRow > -1) {
             // ambil data tiap kolom
             this.selectedIdSiswa = Integer.parseInt(tabelSiswa.getValueAt(selectedRow, 0).toString());
@@ -324,7 +339,8 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
             for (int i = 0; i < kelasField.getItemCount(); i++) {
                 Kelas item = kelasField.getItemAt(i);
                 if (item != null && item.kelas.equals(kelas)) {
-                    kelasField.setSelectedIndex(i);
+                    kelasField.setSelectedItem(kelas);
+                     kelasField.setSelectedIndex(i);
                     break;
                 }
             }
@@ -359,8 +375,6 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
         // Refresh tabel setelah delete
         getSiswa();
         clear();
-       
-
     }
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -387,35 +401,51 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
     if (confirm == JOptionPane.YES_OPTION) {
         if (!validateForm()) return;
          // Refresh tabel setelah delete
+       
+       
+      System.out.println(selectedKelas.kelas + selectedKelas.id);
+    Siswa siswa = new Siswa(
+        this.selectedIdSiswa,
+        namaField.getText().trim(),
+        nisField.getText().trim(),
+        Integer.parseInt(noAbsenField.getText().trim()),
+        selectedKelas.kelas,
+        jurusanField.getText().trim()
+    );
+
+    this.siswa_repo.updateSiswa(siswa, selectedKelas.id, this);
         getSiswa();
         clear();
-       
-
-       Kelas selectedKelas = (Kelas) kelasField.getSelectedItem();
-       System.out.println(selectedKelas);
-        Siswa siswa = new Siswa(
-            this.selectedIdSiswa,
-            namaField.getText().trim(),
-            nisField.getText().trim(),
-            Integer.parseInt("15"),
-            selectedKelas.kelas,
-            jurusanField.getText().trim()
-        );
-        
-        this.siswa_repo.updateSiswa(siswa, selectedKelas.id, this);
-
     }
     
     
     }//GEN-LAST:event_editButtonActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       new LeaderboardForm().setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        new NilaiForm().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
    private boolean validateForm() {
     String nama = namaField.getText().trim();
     String jurusan = jurusanField.getText().trim();
-    String noAbsen = noAbsenField.getText().trim();
+    String noAbsen = noAbsenField.getText();
     String nis = nisField.getText().trim();
     Kelas kelas = (Kelas) kelasField.getSelectedItem();
-
+   
     if (nama.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Nama tidak boleh kosong", "Validasi", JOptionPane.WARNING_MESSAGE);
         namaField.requestFocus();
@@ -428,7 +458,7 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
         return false;
     }
 
-    if (noAbsen.isEmpty() || !noAbsen.matches("\\d+")) {
+    if (noAbsen.trim().isEmpty() || !noAbsen.trim().matches("\\d+")) {
         JOptionPane.showMessageDialog(this, "No Absen tidak boleh kosong dan harus angka", "Validasi", JOptionPane.WARNING_MESSAGE);
         noAbsenField.requestFocus();
         return false;
@@ -442,10 +472,10 @@ public class DaftarSiswaForm extends javax.swing.JFrame {
 
     if (kelas == null) {
         JOptionPane.showMessageDialog(this, "Kelas harus dipilih", "Validasi", JOptionPane.WARNING_MESSAGE);
-        kelasField.requestFocus();
         return false;
     }
-
+    System.out.println();
+    selectedKelas = kelas;
     return true; // semua valid
 }
 
